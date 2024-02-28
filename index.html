@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Registration</title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./style.css" />
+
+    <!-- Custom JS -->
+    <script defer src="./app.js"></script>
+
+    <!-- Iconify -->
+    <script src="https://code.iconify.design/iconify-icon/2.0.0/iconify-icon.min.js"></script>
+  </head>
+  <body>
+    <h1 class="heading">Student Registrations Detail</h1>
+
+    <div class="top--buttons">
+      <div class="btn btn--add_student">
+        <div class="add_student-title">Add New Student</div>
+        <iconify-icon
+          class="icon icon--add_student"
+          icon="carbon:add-filled"
+        ></iconify-icon>
+      </div>
+
+      <div class="btn btn--delete_all">
+        <div class="add_student-title">Delete all Students</div>
+        <iconify-icon
+          class="icon icon--delete_all"
+          icon="fluent:people-team-delete-20-filled"
+        ></iconify-icon>
+      </div>
+    </div>
+
+    <!-- Start -- Table for displaying the student data -->
+    <div class="display__container">
+      <table class="display__container-table">
+        <thead>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Date of Birth</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>Graduation Year</th>
+          <th>Actions</th>
+        </thead>
+      </table>
+    </div>
+    <!-- End -- Table for displaying the student data -->
+
+    <div class="modal__view add--student hidden">
+      <div class="modal__content">
+        <h1 class="heading">Student Registration</h1>
+
+        <div class="icon close__modal">
+          <iconify-icon icon="carbon:close-outline"></iconify-icon>
+        </div>
+
+        <form method="post" id="student-registration-form">
+          <table class="table">
+            <!-- Row 1 start -->
+            <tr>
+              <th colspan="2"><label for="firstName">First Name</label></th>
+
+              <th colspan="2"><label for="lastName">Last Name</label></th>
+
+              <th colspan="2"><label for="dob">Date of Birth</label></th>
+            </tr>
+
+            <tr>
+              <td colspan="2">
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  pattern="^[a-zA-Z]{3,20}$"
+                  required
+                />
+              </td>
+
+              <td colspan="2">
+                <input type="text" id="lastName" name="lastName" />
+              </td>
+
+              <td colspan="2">
+                <input type="date" id="dob" name="dob" required />
+              </td>
+            </tr>
+            <!-- Row 1 end -->
+
+            <!-- Row 2 start -->
+            <tr>
+              <th colspan="2"><label for="email">Email</label></th>
+
+              <th colspan="2"><label for="address">Address</label></th>
+
+              <th colspan="2">
+                <label for="graduationYear">Graduation Year</label>
+              </th>
+            </tr>
+
+            <tr>
+              <td colspan="2">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  onchange="validateEmail(this)"
+                  required
+                />
+              </td>
+
+              <td colspan="2">
+                <input type="text" id="address" name="address" required />
+              </td>
+
+              <td colspan="2">
+                <input
+                  type="month"
+                  id="graduationYear"
+                  name="graduationYear"
+                  required
+                />
+              </td>
+            </tr>
+            <!-- Row 2 end -->
+
+            <!-- Education details start -->
+            <tr class="education--details">
+              <th class="education--title" colspan="6">Education</th>
+
+              <th class="icon add-icon" colspan="1" onclick="addNewEducation()">
+                <iconify-icon icon="carbon:add-filled"></iconify-icon>
+              </th>
+            </tr>
+
+            <tr>
+              <th><label for="degree">Degree/Board</label></th>
+              <th><label for="school">School/College</label></th>
+              <th><label for="startDate">Start Date</label></th>
+              <th><label for="passoutYear">Passout Year</label></th>
+              <th><label for="percentage">Percentage</label></th>
+              <th><label for="backlog">Backlog</label></th>
+            </tr>
+
+            <tr>
+              <td>
+                <input type="text" id="degree-1" name="degree-1" required />
+              </td>
+              <td>
+                <input type="text" id="school-1" name="school-1" required />
+              </td>
+              <td>
+                <input
+                  type="month"
+                  id="startDate-1"
+                  name="startDate-1"
+                  required
+                  onchange="setMinPassoutYear(this)"
+                />
+              </td>
+              <td>
+                <input
+                  type="month"
+                  id="passoutYear-1"
+                  name="passoutYear-1"
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  id="percentage-1"
+                  name="percentage-1"
+                  max="100"
+                  min="0"
+                  step="0.01"
+                  placeholder="Don't use % sign"
+                  oninput="onNegativeInputChange(this)"
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  id="backlog-1"
+                  name="backlog-1"
+                  placeholder="If any enter number"
+                  required
+                  min="0"
+                  oninput="onNegativeInputChange(this)"
+                />
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <input type="text" id="degree-2" name="degree-2" required />
+              </td>
+              <td>
+                <input type="text" id="school-2" name="school-2" required />
+              </td>
+              <td>
+                <input
+                  type="month"
+                  id="startDate-2"
+                  name="startDate-2"
+                  onchange="setMinPassoutYear(this)"
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="month"
+                  id="passoutYear-2"
+                  name="passoutYear-2"
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  id="percentage-2"
+                  name="percentage-2"
+                  max="100"
+                  min="0"
+                  step="0.01"
+                  placeholder="Don't use % sign"
+                  oninput="onNegativeInputChange(this)"
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  min="0"
+                  id="backlog-2"
+                  name="backlog-2"
+                  placeholder="If any enter number"
+                  oninput="onNegativeInputChange(this)"
+                  required
+                />
+              </td>
+            </tr>
+            <!-- Education details end -->
+
+            <!-- Submit Form -->
+            <tr class="dynamic">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="submit-cell">
+                <button type="submit" value="submit" class="btn btn--submit">
+                  Submit
+                </button>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
